@@ -1,19 +1,29 @@
 // server/server.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
 const PORT = 5000;
 
-// Connect to MongoDB
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Route for root (index.html)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+// MongoDB connection
 mongoose.connect('mongodb://localhost:27017/notesapp', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
-// Define Note Schema
+// Note Schema and Model
 const noteSchema = new mongoose.Schema({
   content: String
 });
@@ -26,7 +36,7 @@ app.get('/api/notes', async (req, res) => {
   res.json(notes);
 });
 
-// Create a new note
+// Create new note
 app.post('/api/notes', async (req, res) => {
   const newNote = new Note({
     content: req.body.content
