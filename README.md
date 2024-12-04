@@ -18,7 +18,6 @@ cd notes-taking-app
 Install the required dependencies for both the client and server.
 - For the backend (server-side), install the required Node.js dependencies:
 ```bash
-cd server
 npm install
 ```
 - For the frontend (client-side), the HTML, CSS, and JS files are already set up in the `public` directory, so no additional dependencies are needed here.
